@@ -180,9 +180,9 @@
     function answerQuestion(question) {
         console.log('[KahootExt] answerQuestion called, type:', question.type);
 
-        // Retry mechanism - poll until buttons are interactive (up to 6 seconds)
+        // Retry mechanism - poll until buttons are interactive
         let attempts = 0;
-        const maxAttempts = 30;
+        const maxAttempts = 60;
 
         function tryClick() {
             attempts++;
@@ -202,12 +202,12 @@
                         setTimeout(() => {
                             const b = document.querySelector(`button[data-functional-selector="multi-select-button-${ans}"]`);
                             if (b) simulateClick(b);
-                        }, i * 200);
+                        }, i * 80);
                     });
                     setTimeout(() => {
                         const submitBtn = document.querySelector('[data-functional-selector="multi-select-submit-button"]');
                         if (submitBtn) simulateClick(submitBtn);
-                    }, question.answers.length * 200 + 300);
+                    }, question.answers.length * 80 + 100);
                     return;
                 }
             }
@@ -223,21 +223,21 @@
                         const sb = document.querySelector('[data-functional-selector="submit-button"]') ||
                                    document.querySelector('button[type="submit"]');
                         if (sb) simulateClick(sb);
-                    }, 300);
+                    }, 100);
                     return;
                 }
             }
 
             // Button not found yet, retry
             if (attempts < maxAttempts) {
-                setTimeout(tryClick, 200);
+                setTimeout(tryClick, 50);
             } else {
                 console.log('[KahootExt] Max attempts reached, giving up');
             }
         }
 
-        // Start trying after a small initial delay
-        setTimeout(tryClick, 500);
+        // Start trying immediately
+        setTimeout(tryClick, 50);
     }
 
     function onQuestionStart() {
