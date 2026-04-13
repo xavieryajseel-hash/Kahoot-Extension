@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "KaHack Neon Pro (Extension)",
+  "version": "2.3.0",
+  "description": "Versión extensión del script KaHack Neon Pro",
+  "permissions": [],
+  "host_permissions": [
+    "https://kahoot.it/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://kahoot.it/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
